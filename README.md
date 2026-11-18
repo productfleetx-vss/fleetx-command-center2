@@ -45,4 +45,21 @@ Removing the modelled parts needs per-stage timestamps (gate in/out, arrival at 
 
 ## Login (demo)
 
-The three users in `CONFIG.users` use password `Utcl@2026`. Auth is client-side only: there is no backend yet.
+The three accounts live in `CONFIG.users` (`src/fx/engine.js`). Passwords are **not** stored in the
+source: only `sha256(CONFIG.pwSalt + password)` is, and `FX.login` compares digests. The OTP codes are
+stored the same way (`OTP_HASHES`) and wrong tries are capped at `CONFIG.otpMaxAttempts`.
+
+### Security notes (read before sharing a build)
+
+- **Rotate the shared password.** The password that used to be hardcoded here (`Utcl@2026`) was shipped
+  in every build made from this repo and must be considered public. Change it on any real account that
+  uses it, then regenerate the digests above with
+  `node -e "console.log(require('crypto').createHash('sha256').update('utcl-command-v9:'+'NEW_PASSWORD').digest('hex'))"`.
+- **Sign-in and roles are browser-only.** The session is plain JSON in `localStorage`, so anyone can
+  edit it and open any workspace, and any digest in the bundle can be brute-forced offline. Real
+  separation between logistics head, plant head and control tower needs the records and the role check
+  to move to a server; until then treat every build as public to whoever can open its URL.
+- **The trip feed is real.** `src/data/trips.json` ships with the page, so everything in it is public
+  to any visitor. Driver mobile numbers are masked; driver names, vehicle registrations, customers and
+  invoice numbers are not. Redact or replace them before a build goes anywhere public.
+

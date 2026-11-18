@@ -12646,6 +12646,34 @@ const eu = "Agentic Control Tower",
  Au = 2600,
  su = r => new Promise(h => window.setTimeout(h, r));
 
+/* Uploads are validated here, not by the file picker: the accept attribute is advisory and a
+   selected file can be anything of any size. */
+const fxUploadMaxBytes = 12 * 1024 * 1024,
+ fxUploadTypes = {
+  pod: {
+   ext: /\.(pdf|jpe?g|png)$/i,
+   mime: /^(application\/pdf|image\/jpeg|image\/png)$/,
+   label: "a PDF, JPG or PNG"
+  },
+  evidence: {
+   ext: /\.(pdf|jpe?g|png|docx?|xlsx?|csv|txt)$/i,
+   mime: /^(application\/pdf|image\/jpeg|image\/png|text\/plain|text\/csv|application\/vnd\.|application\/msword)/,
+   label: "a document, spreadsheet or image"
+  }
+ },
+ fxEvidenceAccept = ".pdf,.jpg,.jpeg,.png,.doc,.docx,.xls,.xlsx,.csv,.txt";
+
+/* Returns a message to show when the file must be rejected, or null when it is acceptable. */
+function fxFileRejection(file, kind) {
+ const rule = fxUploadTypes[kind];
+ if (!file || !rule) return "That file could not be read. Choose another one.";
+ if (!rule.ext.test(file.name)) return `That file type is not accepted. Choose ${rule.label}.`;
+ if (file.type && !rule.mime.test(file.type)) return `That file type is not accepted. Choose ${rule.label}.`;
+ if (file.size > fxUploadMaxBytes) return `That file is too large. The limit is ${Math.round(fxUploadMaxBytes / (1024 * 1024))} MB.`;
+ if (!file.size) return "That file is empty. Choose another one.";
+ return null
+}
+
 function ou() {
  const {
   session: r,
@@ -12700,6 +12728,11 @@ function ou() {
   O = async X => {
    const H = X.target.files?.[0];
    if (X.target.value = "", !H) return;
+   const zt = fxFileRejection(H, "pod");
+   if (zt) {
+    ee(zt);
+    return
+   }
    const Ce = pl(H.name) ? `/files/${H.name}` : URL.createObjectURL(H);
    fe({
     fileName: H.name,
@@ -12830,6 +12863,11 @@ function ou() {
   }, lA = X => {
    const H = X.target.files?.[0];
    if (X.target.value = "", !H || !W) return;
+   const zn = fxFileRejection(H, "evidence");
+   if (zn) {
+    ee(zn);
+    return
+   }
    const Ce = S.cases.find(Oe => Oe.id === W);
    Ce && ne(Ce.id, Oe => ({
     ...Oe,
@@ -12931,6 +12969,7 @@ function ou() {
    ref: Be,
    className: "visually-hidden",
    type: "file",
+   accept: fxEvidenceAccept,
    onChange: lA
   }), k && s.jsx(nN, {
    state: S,

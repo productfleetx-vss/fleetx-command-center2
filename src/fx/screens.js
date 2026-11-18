@@ -1909,8 +1909,8 @@ delete VIEW_TITLE.ct.guardrails;
 function snapPrev() { var u = uiFor(session().role), dd = FX.derive(); u.prev = {}; Object.keys(FX.state().guardrails).forEach(function (cat) { u.prev[cat] = dd.all.filter(function (t) { return t.cat === cat && t.phase === 'open' && t.picked; }).length; }); }
 
 /* ---------- sign-in: account decides the workspace; password, OTP and forgot-password ---------- */
-var OTP_ACCOUNTS = { '9999249625': 'ct' };
-var OTP_CODES = ['5246', '5247', '5248', '5249'];
+/* OTP sign-in: the number-to-workspace map and the accepted codes live in the engine, which
+   keeps only salted digests of the codes and caps wrong attempts. */
 function loginHtml() {
   var mode = ui.loginMode || 'pwd', form;
   if (mode === 'otp') {
@@ -1941,7 +1941,7 @@ function loginHtml() {
 function relogin(focusSel) { root.innerHTML = loginHtml(); var f = root.querySelector(focusSel || 'input'); if (f) f.focus(); }
 function lgErr(t) { var e = document.getElementById('lg-err'); if (e) e.textContent = t; }
 UI.on('lg-mode', function (d) { ui.loginMode = d.arg; ui.otpPhone = null; ui.resetSent = null; saveUi(); relogin(); });
-UI.on('otp-change', function () { ui.otpPhone = null; saveUi(); relogin(); });
+UI.on('otp-change', function () { ui.otpPhone = null; FX.otpReset(); saveUi(); relogin(); });
 UI.on('otp-resend', function () { lgErr(''); var e = document.getElementById('lg-err'); if (e) { e.textContent = 'A new code has been sent.'; e.className = 'lg-err ok'; } });
 UI.on('form-login', function (f) {
   var u = f.u.value.trim(), p = f.p.value;
@@ -1954,14 +1954,15 @@ UI.on('form-otp', function (f) {
   if (!ui.otpPhone) {
     var ph = f.ph.value.replace(/\D/g, '').slice(-10);
     if (ph.length !== 10) { lgErr('Enter a 10-digit mobile number.'); return; }
-    if (!OTP_ACCOUNTS[ph]) { lgErr('No account is linked to this number.'); return; }
-    ui.otpPhone = ph; saveUi(); relogin('input[name=otp]'); return;
+    if (!FX.otpAccount(ph)) { lgErr('No account is linked to this number.'); return; }
+    ui.otpPhone = ph; FX.otpReset(); saveUi(); relogin('input[name=otp]'); return;
   }
-  var code = f.otp.value.trim();
-  if (OTP_CODES.indexOf(code) < 0) { lgErr('That code is not right. Check the SMS and try again.'); return; }
-  var user = C.users.find(function (x) { return x.role === OTP_ACCOUNTS[ui.otpPhone]; });
-  var s = user && FX.login(user.username, user.password);
-  if (!s) { lgErr('Sign-in failed. Try again.'); return; }
+  if (FX.otpRemaining() <= 0) { ui.otpPhone = null; saveUi(); relogin(); lgErr('Too many wrong codes. Start again with your mobile number.'); return; }
+  var s = FX.loginOtp(ui.otpPhone, f.otp.value);
+  if (!s) {
+    if (FX.otpRemaining() <= 0) { ui.otpPhone = null; saveUi(); relogin(); lgErr('Too many wrong codes. Start again with your mobile number.'); return; }
+    lgErr('That code is not right. Check the SMS and try again.'); return;
+  }
   ui.loginMode = 'pwd'; ui.otpPhone = null; saveUi(); mount();
 });
 UI.on('form-forgot', function (f) {
