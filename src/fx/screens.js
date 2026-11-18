@@ -3,6 +3,7 @@
    earlier overridden copies of 17 functions were dropped (only the last declaration ever ran). */
 import FX_MAP from '@/data/india-map.json';
 import { FX_ASSETS } from '@/fx/assets';
+import { RECORDINGS, recordingUrl } from '@/fx/recordings';
 
 /* =====================================================================
    UTCL Command — screens. Every view is a render function of the store.
@@ -1566,8 +1567,8 @@ function casePaneBody(t, u) { var p = caseParts(t, u); return p.head + '<div cla
 function caseParts(t, u) {
   var tab = u.ctab || 'trip', o = t.o || {}, calcs = FX.derive().calcByDi, c = calcs[t.di];
   var tabs = [['trip', 'Trip details'], ['calls', 'Calls & responses'], ['timeline', 'Timeline'], ['verify', 'Verification']];
-  var calls = caseCalls(t), mails = FX.thread(t.id) || [];
-  var counts = { calls: calls.length + mails.length, timeline: FX.state().events.filter(function (e) { return e.ticket === t.id; }).length, verify: (o.criteria || []).length };
+  var calls = caseCalls(t), mails = FX.thread(t.id) || [], rec = recordingFor(t);
+  var counts = { calls: calls.length + mails.length + (rec ? 1 : 0), timeline: FX.state().events.filter(function (e) { return e.ticket === t.id; }).length, verify: (o.criteria || []).length };
   var head = '<div class="cs-h"><div class="cs-id"><h2 tabindex="-1">' + esc(t.vehicle) + (t.repeat ? '<span class="rep">REPEAT</span>' : '') + '</h2>' + statusBadge(t) + '</div>' +
     '<div class="cs-sub">DI ' + esc(t.di) + ' · ' + esc(t.cat) + (t.sub ? ' · ' + esc(t.sub) : '') + '</div>' +
     '<div class="cs-m"><div><span>Current measure</span><b>' + esc(t.mText) + '</b>' + (t.mSub ? '<em>' + esc(t.mSub) + '</em>' : '') + '</div><div><span>SLA age</span><b>' + hrs(t.slaH) + '</b></div><div><span>Level</span><b>' + (t.phase === 'open' ? (t.lane === 'action' ? 'Action' : t.lane === 'followup' ? 'Follow up' : 'Agent') : esc(t.status)) + '</b></div></div>' +
@@ -1582,7 +1583,10 @@ function caseParts(t, u) {
       (o.note ? '<div class="cs-note">' + ICON.warn + '<span><b>Latest note</b> ' + esc(o.note) + '</span></div>' : '');
   } else if (tab === 'calls') {
     u.ctx = u.ctx || {};
-    body = (calls.length ? '<h4 class="cs-s">Agent calls (' + calls.length + ')</h4>' + calls.map(function (cl, i) {
+    body = (rec ? '<h4 class="cs-s">Call recording</h4><div class="call" data-callkey="rec:' + esc(t.cat) + '"><div class="call-h"><b>' + esc(rec.label) + '</b><span class="muted">' + Math.floor(rec.seconds / 60) + ':' + ('0' + Math.round(rec.seconds % 60)).slice(-2) + '</span></div>' +
+      '<div class="call-o"><span>Transcript</span> Not transcribed yet</div>' +
+      '<div class="call-c"><button class="btn sm" data-act="pane-play" data-arg="rec:' + esc(t.cat) + '" aria-label="Play recording">' + ICON.play + 'Play recording</button><progress max="1" value="0" aria-label="Playback progress"></progress></div></div>' : '') +
+      (calls.length ? '<h4 class="cs-s">Agent calls (' + calls.length + ')</h4>' + calls.map(function (cl, i) {
       var k = 'c' + i + t.id, open = u.ctx[k], tx = cl.tx;
       return '<div class="call" data-callkey="' + esc(tx.audio || '') + '"><div class="call-h">' + aiBadge() + '<b>' + esc(tx.party) + '</b><span class="muted">' + esc(tx.language) + ' · ' + esc(cl.when) + (tx.duration ? ' · ' + Math.floor(tx.duration / 60) + ':' + ('0' + Math.round(tx.duration % 60)).slice(-2) : '') + '</span></div>' +
         '<div class="call-o"><span>Outcome</span> ' + esc(tx.outcome || FX.readTranscript(tx).outcome) + '</div>' +
@@ -1613,6 +1617,14 @@ function caseParts(t, u) {
   return { head: head, body: body };
 }
 /* Calls on a ticket, from the store (agent calls) or the ticket's own record. */
+/* Real call recordings (src/fx/recordings.ts) sit on the top-ranked case of their type, ranked
+   exactly as in "Cases that need a person". Audio only: no transcript is attached yet. */
+function recordingFor(t) {
+  var r = RECORDINGS[t.cat]; if (!r) return null;
+  var need = FX.metrics().openTickets.filter(function (x) { return x.phase === 'open' && x.lane !== 'ai' && x.cat === t.cat; });
+  var top = rankTickets(need)[0];
+  return top && top.id === t.id ? r : null;
+}
 function caseCalls(t) {
   var S = FX.state(), out = [];
   (S.calls[t.id] || []).forEach(function (cl) { out.push({ tx: FX.txFor(t, cl.lib, cl.eta), when: U.fmtDT(FX.timeOf(cl.at)) }); });
@@ -1624,7 +1636,7 @@ var paneAudio = null, paneKey = null;
 UI.on('pane-play', function (d, btn) {
   if (paneAudio && paneKey === d.arg && !paneAudio.paused) { paneAudio.pause(); btn.innerHTML = ICON.play + 'Play recording'; return; }
   if (paneAudio) paneAudio.pause();
-  var url = FX.audioUrl(d.arg); if (!url) { btn.textContent = 'No recording'; return; }
+  var url = /^rec:/.test(d.arg) ? recordingUrl(d.arg.slice(4)) : FX.audioUrl(d.arg); if (!url) { btn.textContent = 'No recording'; return; }
   paneAudio = new Audio(url); paneKey = d.arg;
   btn.innerHTML = ICON.pause + 'Pause';
   function box() { return document.querySelector('#fx-app [data-callkey="' + CSS.escape(d.arg) + '"]'); }
