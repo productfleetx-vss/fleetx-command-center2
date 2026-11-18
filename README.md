@@ -73,7 +73,7 @@ Convin sends no CORS headers, so the page can't call it directly. Calls go **pag
 Setup, against the same Bolt Database project in both Bolt and Netlify:
 
 1. Deploy the function: `supabase functions deploy convin-lead`.
-2. Set the function secrets: `CONVIN_API_KEY`, `CONVIN_API_TOKEN`.
+2. Set the function secrets: `CONVIN_API_KEY`, `CONVIN_API_TOKEN` (Bolt project → database icon → **Secrets** → add each by name, or Supabase dashboard → Edge Functions → Secrets).
 3. Set the page env (`.env.example`): `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Set them in Bolt **and** in Netlify, pointing to the same project.
 4. Calls start as **dry runs**. The function validates the payload and answers without dialling until you set `CONVIN_LIVE=true` on it.
 
