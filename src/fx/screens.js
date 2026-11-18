@@ -1584,8 +1584,11 @@ function caseParts(t, u) {
   } else if (tab === 'calls') {
     u.ctx = u.ctx || {};
     body = (rec ? '<h4 class="cs-s">Call recording</h4><div class="call" data-callkey="rec:' + esc(t.cat) + '"><div class="call-h"><b>' + esc(rec.label) + '</b><span class="muted">' + Math.floor(rec.seconds / 60) + ':' + ('0' + Math.round(rec.seconds % 60)).slice(-2) + '</span></div>' +
-      '<div class="call-o"><span>Transcript</span> Not transcribed yet</div>' +
-      '<div class="call-c"><button class="btn sm" data-act="pane-play" data-arg="rec:' + esc(t.cat) + '" aria-label="Play recording">' + ICON.play + 'Play recording</button><progress max="1" value="0" aria-label="Playback progress"></progress></div></div>' : '') +
+      (rec.reason ? '<div class="call-o"><span>Reason given</span> ' + esc(rec.reason) + '</div>' : '') +
+      (rec.summary ? '' : '<div class="call-o"><span>Transcript</span> Not transcribed yet</div>') +
+      '<div class="call-c"><button class="btn sm" data-act="pane-play" data-arg="rec:' + esc(t.cat) + '" aria-label="Play recording">' + ICON.play + 'Play recording</button><progress max="1" value="0" aria-label="Playback progress"></progress>' +
+      (rec.summary ? '<button class="dlink" data-act="ctx" data-arg="rec' + esc(t.id) + '" aria-expanded="' + !!(u.ctx || {})['rec' + t.id] + '">' + ((u.ctx || {})['rec' + t.id] ? 'Hide summary' : 'Show summary (' + rec.summary.length + ' lines)') + '</button>' : '') + '</div>' +
+      (rec.summary && (u.ctx || {})['rec' + t.id] ? '<div class="rp-tx">' + rec.summary.map(function (l) { return '<p><em>' + esc(l.speaker) + '</em>' + esc(l.text) + '</p>'; }).join('') + '<p class="muted sm">Summary written by the UTCL team, not a word-for-word transcript.</p></div>' : '') + '</div>' : '') +
       (calls.length ? '<h4 class="cs-s">Agent calls (' + calls.length + ')</h4>' + calls.map(function (cl, i) {
       var k = 'c' + i + t.id, open = u.ctx[k], tx = cl.tx;
       return '<div class="call" data-callkey="' + esc(tx.audio || '') + '"><div class="call-h">' + aiBadge() + '<b>' + esc(tx.party) + '</b><span class="muted">' + esc(tx.language) + ' · ' + esc(cl.when) + (tx.duration ? ' · ' + Math.floor(tx.duration / 60) + ':' + ('0' + Math.round(tx.duration % 60)).slice(-2) : '') + '</span></div>' +

@@ -5,14 +5,40 @@ import epodDelay from '@/assets/audio/epod-delay.mp3';
 /**
  * Real call recordings supplied by the UTCL team, one per exception type.
  * Each is shown on the top-ranked case of its type in "Cases that need a person".
- * Audio only: the words haven't been transcribed yet, so no transcript, outcome or ETA
- * is attached to them, and the case's own data is left as it is.
+ * A summary is shown only where the UTCL team has written one for that call. It is their
+ * account of the call, not a word-for-word transcript. Calls without one say so.
+ * The case's own data is left as it is.
  */
-export interface Recording { src: string; seconds: number; label: string }
+export interface SummaryLine { speaker: string; text: string }
+export interface Recording {
+  src: string;
+  seconds: number;
+  label: string;
+  /** Reason the driver gave, as written by the UTCL team. */
+  reason?: string;
+  /** Call summary, as written by the UTCL team. */
+  summary?: SummaryLine[];
+}
 
 export const RECORDINGS: Record<string, Recording> = {
-  'Route Deviation': { src: routeDeviation, seconds: 68.5, label: 'Route deviation call' },
-  'Customer Detention': { src: customerDetention, seconds: 32.4, label: 'Customer detention call · driver' },
+  'Route Deviation': {
+    src: routeDeviation,
+    seconds: 54.1,
+    label: 'Route deviation call · driver',
+    reason: 'Customer asked him to deliver at another place',
+    summary: [
+      { speaker: 'AI agent', text: 'Checks that it is speaking to the assigned driver.' },
+      { speaker: 'Driver', text: 'Confirms he is the assigned driver.' },
+      { speaker: 'AI agent', text: 'Asks why the truck has travelled beyond the lead distance.' },
+      { speaker: 'Driver', text: 'The customer asked him to deliver at another place.' },
+    ],
+  },
+  'Customer Detention': {
+    src: customerDetention,
+    seconds: 32.4,
+    label: 'Customer detention call · driver',
+    reason: 'Driver was having lunch',
+  },
   'ePOD Delay': { src: epodDelay, seconds: 47.3, label: 'ePOD call' },
 };
 
