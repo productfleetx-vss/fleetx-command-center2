@@ -2,9 +2,27 @@
 // Drives the real convin-lead handler with Deno.serve and fetch stubbed (nothing leaves the machine).
 let handler: (r: Request) => Promise<Response> = null!;
 (Deno as any).serve = (h: any) => { handler = h; };
+// Stub the log table: the handler records every accepted trigger here.
+const logRows: any[] = [];
+let logFails = false;
+const envStore: Record<string, string> = { SUPABASE_URL: 'http://localhost', SUPABASE_SERVICE_ROLE_KEY: 'srk' };
+(Deno as any).env.get = (k: string) => envStore[k] ?? null;
+(Deno as any).env.set = (k: string, v: string) => { envStore[k] = v; };
+(Deno as any).env.delete = (k: string) => { delete envStore[k]; };
 const sent: { url: string; headers: Headers; body: string }[] = [];
 let convinReply = new Response(JSON.stringify({ status: 'success', lead_id: 'L1' }), { status: 200 });
-globalThis.fetch = (async (url: string, init: RequestInit) => { sent.push({ url, headers: new Headers(init.headers), body: String(init.body) }); return convinReply.clone(); }) as any;
+(globalThis as any).fetch = (async (url: string, init: RequestInit) => {
+  if (String(url).startsWith('http://localhost')) {
+    if (logFails) throw new Error('down');
+    const u = new URL(url);
+    const body = JSON.parse(String(init.body || '{}'));
+    if (init.method === 'POST' && u.pathname === '/rest/v1/convin_leads') { logRows.push(body); return new Response(JSON.stringify([{ id: 'row-' + logRows.length }]), { status: 201 }); }
+    if (init.method === 'PATCH' && u.pathname === '/rest/v1/convin_leads') { logRows[logRows.length - 1] = { ...logRows[logRows.length - 1], ...body }; return new Response('[]', { status: 200 }); }
+    return new Response('[]', { status: 200 });
+  }
+  sent.push({ url, headers: new Headers(init.headers), body: String(init.body) });
+  return convinReply.clone();
+}) as any;
 await import('./index.ts');
 
 const post = (b: unknown) => handler(new Request('http://x/', { method: 'POST', body: typeof b === 'string' ? b : JSON.stringify(b) }));
@@ -47,7 +65,7 @@ const g = await handler(new Request('http://x/', { method: 'GET' })); ok(g.statu
   ok(j.ok && !('lead_kilometers' in j.lead) && !('foo' in j.lead) && j.dropped.includes('foo'), 'extra fields dropped: ' + j.dropped.join(',')); }
 
 // Live mode without secrets
-Deno.env.set('CONVIN_LIVE', 'true'); Deno.env.delete('CONVIN_API_KEY'); Deno.env.delete('CONVIN_API_TOKEN');
+Deno.env.set('CONVIN_LIVE', 'true'); Deno.env.set('CONVIN_API_KEY', ''); Deno.env.set('CONVIN_API_TOKEN', '');
 { const r = await post(det); ok(r.status === 500 && sent.length === 0, 'live without secrets: 500, nothing sent'); }
 
 // Live mode: forwards exactly the cleaned lead with headers
@@ -58,3 +76,17 @@ Deno.env.set('CONVIN_API_KEY', 'k-test'); Deno.env.set('CONVIN_API_TOKEN', 't-te
   ok(s.body === JSON.stringify(det), 'live: body is the documented payload exactly, junk dropped'); }
 convinReply = new Response('{"error":"invalid campaign"}', { status: 400 });
 { const r = await post(det); const j = await r.json(); ok(r.status === 502 && !j.ok && j.status === 400 && j.convin.error === 'invalid campaign', 'live: Convin error surfaced'); }
+
+// Log table: every accepted trigger was recorded, with the outcome patched in
+// (4 dry-run + 1 dropped-fields + 1 live without secrets + 1 live + 1 Convin error = 8;
+// the log-down case never reaches the table)
+ok(logRows.length === 8, `every accepted trigger logged (${logRows.length} rows)`);
+ok(logRows.every((r) => r.external_id && r.lead_type && r.campaign_id && r.account_name === 'Ultratech' && r.payload?.external_id), 'each log row carries the lead identity and payload');
+ok(logRows[0].status === 'dry_run', 'dry-run triggers are recorded as dry_run');
+const live = logRows[logRows.length - 1];
+ok(live.status === 'failed' && live.http_status === 400, 'Convin failure recorded with its HTTP status');
+
+// Log unavailable: trigger refused, nothing sent to Convin
+logFails = true;
+{ const r = await post(det); const j = await r.json(); ok(r.status === 500 && !j.ok && sent.length === 2, 'log down: 500, nothing forwarded'); }
+logFails = false;
