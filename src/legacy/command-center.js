@@ -7529,11 +7529,18 @@ function Vc(r) {
 }
 
 /* Convin payload for the "Trigger Manually" modal. Rules live in supabase/functions/_shared/convin-lead.ts.
-   lead_kilometers, detention_duration_hours and delivery_time are left blank on purpose: the trip feed has
-   no GPS or stage timestamps, so they can't be derived, and they would be read out to a real driver.
-   The operator enters them; the payload is rejected while they are blank. */
+   lead_kilometers, detention_duration_hours and delivery_time can't be derived from the trip feed (no GPS
+   or stage timestamps), so they start from fixed defaults set by the UTCL team, not from the case.
+   The operator can edit them in the payload before triggering. */
+const CONVIN_DEFAULTS = {
+ detentionHours: "6",
+ deviationKm: "90",
+ epodPendingHours: 2
+};
+
 function JN(r, h) {
- const I = r.job,
+ const now = new Date(),
+  I = r.job,
   S = r.issue,
   type = TYPE_FOR_CATEGORY[r.category ?? ""],
   g = {
@@ -7544,7 +7551,7 @@ function JN(r, h) {
   },
   C = {
    type: type ?? "",
-   timestamp: convinTime(),
+   timestamp: convinTime(now),
    ticket_id: I?.jobName ?? "",
    phone_number: convinPhone(h),
    campaign_id: type ? CAMPAIGNS[type] : "",
@@ -7552,18 +7559,18 @@ function JN(r, h) {
   };
  return type === "routeDeviation" ? {
   ...g,
-  lead_kilometers: "",
+  lead_kilometers: CONVIN_DEFAULTS.deviationKm,
   ...C
  } : type === "customerDetention" ? {
   ...g,
   customer_name: S?.customer ?? "",
   customer_location: r.site ?? "",
-  detention_duration_hours: "",
+  detention_duration_hours: CONVIN_DEFAULTS.detentionHours,
   ...C
  } : type === "epodPending" ? {
   ...g,
   customer_name: S?.customer ?? "",
-  delivery_time: "",
+  delivery_time: convinTime(new Date(now.getTime() - CONVIN_DEFAULTS.epodPendingHours * 36e5)),
   ...C
  } : {
   ...g,

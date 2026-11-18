@@ -84,6 +84,6 @@ If the page env is missing, the button reports "forwarder endpoint is not config
 - driver, vehicle, DI (`ticket_id`) and destination come from the trip feed.
 - **phone:** the feed's `mobile_number` is masked (e.g. `93XXXXX599`), so the page can't fill a number that can be dialled. The trigger refuses a masked number. The real number has to be looked up on the server by DI (not built yet), or typed in by the operator.
 - `timestamp` is the trigger time, in IST.
-- `lead_kilometers`, `detention_duration_hours` and `delivery_time` start **blank**. The feed has no GPS or stage timestamps, and Convin's agent reads these values out to a real driver. The operator types them in, and the trigger refuses to send while any of them is blank.
+- `lead_kilometers`, `detention_duration_hours` and `delivery_time` can't be derived from the feed (no GPS or stage timestamps), so they start from fixed team defaults: **90 km**, **6 hours**, and delivery **2 hours before** the trigger time. They are not the case's own figures. The operator can edit them in the payload before triggering.
 
 **Security:** the anon key ships in the page, and login is still client-side only. Anyone holding the anon key can therefore ask the relay to dial a number. Add real auth before turning `CONVIN_LIVE` on outside a trial.

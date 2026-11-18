@@ -12,7 +12,7 @@ export interface Recording { src: string; seconds: number; label: string }
 
 export const RECORDINGS: Record<string, Recording> = {
   'Route Deviation': { src: routeDeviation, seconds: 68.5, label: 'Route deviation call' },
-  'Customer Detention': { src: customerDetention, seconds: 45.5, label: 'Customer detention call' },
+  'Customer Detention': { src: customerDetention, seconds: 32.4, label: 'Customer detention call · driver' },
   'ePOD Delay': { src: epodDelay, seconds: 47.3, label: 'ePOD call' },
 };
 
