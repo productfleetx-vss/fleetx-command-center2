@@ -7601,10 +7601,11 @@ function wN({
   M(!0), B(null), Z(!1);
   const ae = await qN(z);
   M(!1), B(ae);
-  // Rejected before sending (blank or malformed field): show why and the payload, and keep it out of the audit trail.
+  // Rejected before sending (blank or malformed field): show why, keep it out of the audit trail.
+  // The payload stays as the operator left it (collapsed unless they opened it).
   const caught = !ae.ok && ae.status === null && ae.detail.startsWith("Not sent");
   if (!ae.ok) Z(!0);
-  if (caught) { m(!0); return }
+  if (caught) return;
   I({
    phone: String(z.phone_number),
    leadType: String(z.type),
