@@ -27,6 +27,9 @@ npm run build:single   # one self-contained HTML in dist-single/ (open without a
 | `src/data/trips.json` | **The real trip feed**: 976 rows across 3 plants. |
 | `src/data/calls.json`, `clips.json` | Call scripts and voice clips. Clips become `blob:` URLs at runtime, because Safari won't play `data:` audio. |
 | `src/data/india-map.json` | Map outline for the network map. |
+| `src/lib/convin.ts` | Browser side of the Convin call trigger: checks the payload, then posts it to the relay. |
+| `supabase/functions/convin-lead/` | Edge function relay to Convin. It holds the key and token, validates the payload and forwards it. `relay_test.ts` tests it with nothing sent out. |
+| `supabase/functions/_shared/convin-lead.ts` | The single set of Convin payload rules (fields, type/campaign pairs, formats). Both the page and the relay use it. |
 
 ## Data: what is real and what is modelled
 
@@ -63,3 +66,24 @@ stored the same way (`OTP_HASHES`) and wrong tries are capped at `CONFIG.otpMaxA
   to any visitor. Driver mobile numbers are masked; driver names, vehicle registrations, customers and
   invoice numbers are not. Redact or replace them before a build goes anywhere public.
 
+## Convin call trigger ("Trigger Manually")
+
+Convin sends no CORS headers, so the page can't call it directly. Calls go **page → `convin-lead` edge function → Convin**.
+
+Setup, against the same Bolt Database project in both Bolt and Netlify:
+
+1. Deploy the function: `supabase functions deploy convin-lead`.
+2. Set the function secrets: `CONVIN_API_KEY`, `CONVIN_API_TOKEN`.
+3. Set the page env (`.env.example`): `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY`. Set them in Bolt **and** in Netlify, pointing to the same project.
+4. Calls start as **dry runs**. The function validates the payload and answers without dialling until you set `CONVIN_LIVE=true` on it.
+
+If the page env is missing, the button reports "forwarder endpoint is not configured", as v7 did.
+
+**What goes in the payload:**
+
+- driver, vehicle, DI (`ticket_id`) and destination come from the trip feed.
+- **phone:** the feed's `mobile_number` is masked (e.g. `93XXXXX599`), so the page can't fill a number that can be dialled. The trigger refuses a masked number. The real number has to be looked up on the server by DI (not built yet), or typed in by the operator.
+- `timestamp` is the trigger time, in IST.
+- `lead_kilometers`, `detention_duration_hours` and `delivery_time` start **blank**. The feed has no GPS or stage timestamps, and Convin's agent reads these values out to a real driver. The operator types them in, and the trigger refuses to send while any of them is blank.
+
+**Security:** the anon key ships in the page, and login is still client-side only. Anyone holding the anon key can therefore ask the relay to dial a number. Add real auth before turning `CONVIN_LIVE` on outside a trial.

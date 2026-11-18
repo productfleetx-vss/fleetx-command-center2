@@ -1,0 +1,4 @@
+# Only the settings this repo depends on. The Bolt/Supabase project id is set when linking.
+[functions.convin-lead]
+# Callers must send the project's anon key (Authorization: Bearer <anon>).
+verify_jwt = true

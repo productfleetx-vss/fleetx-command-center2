@@ -355,6 +355,7 @@ FX.boot = function (internals) {
   if (saved && saved.schema === 6 && saved.ct && Array.isArray(saved.ct.cases) && saved.shiftMs != null && saved.builtAt && saved.builtClock != null && Date.now() - saved.builtAt < CONFIG.storeMaxAgeH * 3600000) {
     STATE = saved;
     buildRaw(saved.shiftMs);
+    STATE.ct = Object.assign({}, STATE.ct, { cases: STATE.ct.cases.map(feedContacts) });
     STATE.clockMin = realClock();
     return Promise.resolve();
   }
@@ -363,7 +364,7 @@ FX.boot = function (internals) {
     var ct = I.bindTrips(I.initialState(), trips);
     // Keep only tickets bound to a trip that exists in the data.
     ct = Object.assign({}, ct, { cases: ct.cases.filter(function (c) { return c.lane === undefined || RAW.byDi[c.tripIds[0]]; }) });
-    ct = Object.assign({}, ct, { cases: ct.cases.map(alignCase) });
+    ct = Object.assign({}, ct, { cases: ct.cases.map(alignCase).map(feedContacts) });
     STATE = freshState(ct);
     STATE.shiftMs = RAW.shift;
     STATE.builtAt = Date.now(); STATE.builtClock = STATE.clockMin;
@@ -395,6 +396,17 @@ function statsFor(tr, extraKm) {
     currentLocation: tr.stage === 'AT CUSTOMER' ? tr.dest : tr.stage === 'IN TRANSIT' ? 'En route to ' + tr.dest : plantShort(tr.plant) };
 }
 FX.statsFor = statsFor;
+/* The driver phone on a case comes from the trip feed (mobile_number), never from the case seed.
+   The seeded numbers were placeholders that matched none of the feed's drivers, and the
+   Trigger call dials this number. No trip in the feed, or no mobile on it: no number. */
+function feedContacts(c) {
+  if (!c.job || !c.issue) return c;
+  var t = RAW.byDi[c.job.jobName];
+  var phone = t && t.mobile ? '+91 ' + t.mobile : '';
+  if (c.issue.driverPhone === phone) return c;
+  return Object.assign({}, c, { issue: Object.assign({}, c.issue, { driverPhone: phone }) });
+}
+
 function alignCase(c) {
   if (c.lane === undefined || !c.job) return c;
   var t = RAW.byDi[c.tripIds[0]]; if (!t) return c;

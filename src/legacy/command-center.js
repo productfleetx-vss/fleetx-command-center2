@@ -9,6 +9,8 @@ import * as s from 'react/jsx-runtime';
 import * as ut from 'leaflet';
 import * as ReactDOM from 'react-dom';
 import tripFeed from '@/data/trips.json';
+import { triggerConvinLead } from '@/lib/convin';
+import { CAMPAIGNS, TYPE_FOR_CATEGORY, convinPhone, convinTime, newExternalId } from '../../supabase/functions/_shared/convin-lead.ts';
 const LI = r => r.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase(),
  W2 = (...r) => r.filter((h, I, S) => !!h && S.indexOf(h) === I).join(" ");
 var UI = {
@@ -7522,63 +7524,46 @@ const ON = ["Driver", "Transporter", "Customer", "Plant SPOC"],
   "ePOD Delay": "epodPending"
  };
 
-function Nl(r = new Date) {
- return r.toLocaleTimeString("en-US", {
-  hour: "2-digit",
-  minute: "2-digit",
-  hour12: !0
- }).toUpperCase()
-}
-
-function DN(r, h) {
- const [I, S] = r.split(":").map(d => Number(d));
- if (Number.isNaN(I) || Number.isNaN(S)) return Nl();
- const T = new Date;
- return T.setHours(I, S, 0, 0), T.setHours(T.getHours() - h), Nl(T)
-}
-
-function QN() {
- return String(Math.floor(1e7 + Math.random() * 9e7))
-}
-
 function Vc(r) {
- const h = r.replace(/[^\d+]/g, "");
- return h.startsWith("+91") ? `+91-${h.slice(3)}` : h.startsWith("91") && h.length > 10 ? `+91-${h.slice(2)}` : h.startsWith("+") ? h : `+91-${h}`
+ return convinPhone(r)
 }
 
+/* Convin payload for the "Trigger Manually" modal. Rules live in supabase/functions/_shared/convin-lead.ts.
+   lead_kilometers, detention_duration_hours and delivery_time are left blank on purpose: the trip feed has
+   no GPS or stage timestamps, so they can't be derived, and they would be read out to a real driver.
+   The operator enters them; the payload is rejected while they are blank. */
 function JN(r, h) {
  const I = r.job,
   S = r.issue,
-  T = r.category ?? "",
-  d = r.metric,
+  type = TYPE_FOR_CATEGORY[r.category ?? ""],
   g = {
    account_name: yN,
-   driver_name: I?.driver ?? "Driver",
+   driver_name: I?.driver ?? "",
    vehicle_number: I?.vehicleNumber ?? "",
-   issue_location: r.site
+   issue_location: r.site ?? ""
   },
   C = {
-   type: GN[T] ?? "routeDeviation",
-   timestamp: Nl(),
+   type: type ?? "",
+   timestamp: convinTime(),
    ticket_id: I?.jobName ?? "",
-   phone_number: Vc(h),
-   campaign_id: xc[T] ?? "",
-   external_id: QN()
+   phone_number: convinPhone(h),
+   campaign_id: type ? CAMPAIGNS[type] : "",
+   external_id: newExternalId()
   };
- return T === "Route Deviation" ? {
+ return type === "routeDeviation" ? {
   ...g,
-  lead_kilometers: String(d?.kind === "deviation" ? d.km : 0),
+  lead_kilometers: "",
   ...C
- } : T === "Customer Detention" ? {
+ } : type === "customerDetention" ? {
   ...g,
   customer_name: S?.customer ?? "",
-  customer_location: r.site,
-  detention_duration_hours: String(d?.kind === "detention" ? d.hours : 0),
+  customer_location: r.site ?? "",
+  detention_duration_hours: "",
   ...C
- } : T === "ePOD Delay" ? {
+ } : type === "epodPending" ? {
   ...g,
   customer_name: S?.customer ?? "",
-  delivery_time: DN(r.detectedAt, d?.kind === "epod" ? d.hours : 0),
+  delivery_time: "",
   ...C
  } : {
   ...g,
@@ -7589,12 +7574,8 @@ function JN(r, h) {
 function YN(r) {
  return Object.entries(r).map(([h, I]) => [h, String(I)])
 }
-async function qN(r) {
- return {
-  ok: !1,
-  status: null,
-  detail: "The forwarder endpoint is not configured, so the call was not triggered."
- }
+function qN(r) {
+ return triggerConvinLead(r)
 }
 
 function wN({
@@ -7618,8 +7599,13 @@ function wN({
   })
  }, De = async () => {
   M(!0), B(null), Z(!1);
-  const ae = await qN();
-  M(!1), B(ae), I({
+  const ae = await qN(z);
+  M(!1), B(ae);
+  // Rejected before sending (blank or malformed field): show why and the payload, and keep it out of the audit trail.
+  const caught = !ae.ok && ae.status === null && ae.detail.startsWith("Not sent");
+  if (!ae.ok) Z(!0);
+  if (caught) { m(!0); return }
+  I({
    phone: String(z.phone_number),
    leadType: String(z.type),
    campaignId: String(z.campaign_id || xc[f] || "not mapped"),
