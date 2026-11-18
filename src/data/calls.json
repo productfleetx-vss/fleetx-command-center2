@@ -1,0 +1,1385 @@
+{
+ "rd1": {
+  "id": "rd1",
+  "cat": "Route Deviation",
+  "party": "Driver",
+  "result": "eta",
+  "commit": "back on route in 30 minutes",
+  "tags": [],
+  "outcome": "Driver reached · road work diversion, back on route in 30 minutes",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH}, जो {SITE} जा रही है, तय रूट से हट गई है। अभी आप कहाँ हैं?",
+    "translation": "Hello, this is UltraTech Cement calling. Your truck {VEH}, going to {SITE}, has left the approved route. Where are you now?",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "cd58ba062",
+     "$SITE",
+     "ca1679060"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "मैडम, आगे हाईवे पर पुल का काम चल रहा है, पुलिस ने सबको डायवर्जन पर भेजा है।",
+    "translation": "Madam, there is bridge work on the highway ahead, the police have sent everyone on a diversion.",
+    "segs": [
+     "cb17a284a"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है। वापस तय रूट पर कितनी देर में आएंगे?",
+    "translation": "Okay. How long until you are back on the approved route?",
+    "segs": [
+     "c2b78d1d1"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "करीब आधे घंटे में वापस आ जाऊँगा।",
+    "translation": "I will be back in about half an hour.",
+    "segs": [
+     "ced961eca"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "धन्यवाद। हम जीपीएस पर नज़र रखेंगे।",
+    "translation": "Thank you. We will keep watching the GPS.",
+    "segs": [
+     "ced9c5672"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "rd2": {
+  "id": "rd2",
+  "cat": "Route Deviation",
+  "party": "Driver",
+  "result": "eta",
+  "commit": "back on route in 20 minutes",
+  "tags": [],
+  "outcome": "Driver reached · stopped for diesel at a pump off route, back in 20 minutes",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} रूट से करीब आठ किलोमीटर हटकर खड़ी है, सब ठीक है?",
+    "translation": "Hello, this is UltraTech Cement calling. Truck {VEH} is standing about eight kilometres off the route. Is everything alright?",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "c7c823f17"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "हाँ मैडम, डीज़ल डलवाने पंप पर आया था, रूट वाले पंप पर डीज़ल नहीं था।",
+    "translation": "Yes madam, I came to a pump for diesel, the pump on the route had no diesel.",
+    "segs": [
+     "ca12b92c8"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है। कितनी देर में निकलेंगे?",
+    "translation": "Okay. How long before you leave?",
+    "segs": [
+     "c37cd9f71"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "बीस मिनट में निकल जाऊँगा।",
+    "translation": "I will leave in twenty minutes.",
+    "segs": [
+     "ca13da870"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "rd3": {
+  "id": "rd3",
+  "cat": "Route Deviation",
+  "party": "Driver",
+  "result": "eta",
+  "commit": "at site by 6 PM",
+  "tags": [],
+  "etaChange": true,
+  "outcome": "Driver reached · city no-entry, took the bypass; revised arrival 6 PM",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH} तय रास्ते से अलग बाईपास पर चल रही है, क्या वजह है?",
+    "translation": "Hello, this is UltraTech Cement calling. Your truck {VEH} is on the bypass instead of the approved route. What is the reason?",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "c73836dd4"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "शहर में दिन में नो-एंट्री है, इसलिए बाईपास से जा रहा हूँ। थोड़ा लंबा पड़ेगा।",
+    "translation": "There is a no-entry in the city during the day, so I am going by the bypass. It is a little longer.",
+    "segs": [
+     "c6ae70879"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "साइट पर कब तक पहुँचेंगे?",
+    "translation": "By when will you reach the site?",
+    "segs": [
+     "c597ce4f4"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "शाम छह बजे तक पहुँच जाऊँगा।",
+    "translation": "I will reach by six in the evening.",
+    "segs": [
+     "c6a812af4"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है, मैं {SITE} साइट और सेल्स टीम को नया समय बता देती हूँ।",
+    "translation": "Okay, I will tell the {SITE} site and the sales team the new time.",
+    "segs": [
+     "cbca48fd4",
+     "$SITE",
+     "cffd304b3"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "rd4": {
+  "id": "rd4",
+  "cat": "Route Deviation",
+  "party": "Driver",
+  "result": "eta",
+  "commit": "return to approved route now",
+  "tags": [],
+  "outcome": "Driver reached · took an unapproved village shortcut; agreed to return now",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} गाँव वाले कच्चे रास्ते पर जा रही है, यह रूट मंज़ूर नहीं है।",
+    "translation": "Hello, this is UltraTech Cement calling. Truck {VEH} is on a village kaccha road. This route is not approved.",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "cacad2e88"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "मैडम, शॉर्टकट लिया था, हाईवे पर जाम था।",
+    "translation": "Madam, I took a shortcut, there was a jam on the highway.",
+    "segs": [
+     "c53e9b711"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "इस रास्ते पर गाड़ी और सीमेंट दोनों का जोखिम है। कृपया तुरंत हाईवे पर वापस आइए।",
+    "translation": "There is risk to both the truck and the cement on this road. Please come back to the highway immediately.",
+    "segs": [
+     "c591b498f"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "ठीक है मैडम, अभी वापस मुड़ रहा हूँ।",
+    "translation": "Okay madam, I am turning back now.",
+    "segs": [
+     "c49b2ceaf"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "rd5": {
+  "id": "rd5",
+  "cat": "Route Deviation",
+  "party": "Transporter",
+  "result": "refusal",
+  "commit": null,
+  "tags": [
+   "Driver Not Answered"
+  ],
+  "outcome": "Driver did not answer twice · transporter control room says driver went home, will call back",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH} का ड्राइवर दो बार फ़ोन नहीं उठा रहा और गाड़ी रूट से पैंतीस किलोमीटर दूर है।",
+    "translation": "Hello, this is UltraTech Cement calling. The driver of your truck {VEH} has not picked up twice and the truck is thirty-five kilometres off the route.",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "c15fae16b"
+    ]
+   },
+   {
+    "speaker": "Transporter",
+    "text": "हाँ जी, लगता है ड्राइवर अपने गाँव की तरफ़ चला गया है। मैं उससे बात करके बताता हूँ।",
+    "translation": "Yes, it seems the driver has gone towards his village. I will talk to him and let you know.",
+    "segs": [
+     "c4db36a58"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "यह अनधिकृत रुकावट है। कृपया एक घंटे के अंदर गाड़ी वापस रूट पर लाइए।",
+    "translation": "This is an unauthorised stop. Please get the truck back on the route within one hour.",
+    "segs": [
+     "c79a95eab"
+    ]
+   },
+   {
+    "speaker": "Transporter",
+    "text": "देखता हूँ जी, ड्राइवर से बात होते ही कॉल करता हूँ।",
+    "translation": "I will see, I will call as soon as I speak to the driver.",
+    "segs": [
+     "c60348279"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "td1": {
+  "id": "td1",
+  "cat": "In-transit Delay",
+  "party": "Driver",
+  "result": "eta",
+  "commit": "at site by 9 PM",
+  "tags": [],
+  "etaChange": true,
+  "outcome": "Driver reached · tyre puncture, repair one hour; revised arrival 9 PM",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH}, {PLANT} से {SITE} के लिए, तय समय से पीछे चल रही है। क्या दिक्कत है?",
+    "translation": "Hello, this is UltraTech Cement calling. Your truck {VEH}, from {PLANT} to {SITE}, is running behind schedule. What is the problem?",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "$PLANT",
+     "c93c68933",
+     "$SITE",
+     "ca09f02cb"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "मैडम, पिछला टायर पंक्चर हो गया है, ठीक करवा रहा हूँ। एक घंटा लगेगा।",
+    "translation": "Madam, the rear tyre is punctured, I am getting it fixed. It will take an hour.",
+    "segs": [
+     "ccc42354b"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "साइट पर कब तक पहुँचेंगे?",
+    "translation": "By when will you reach the site?",
+    "segs": [
+     "c597ce4f4"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "रात नौ बजे तक पहुँच जाऊँगा।",
+    "translation": "I will reach by nine at night.",
+    "segs": [
+     "cef778567"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है, मैं साइट और सेल्स को बता देती हूँ।",
+    "translation": "Okay, I will inform the site and sales.",
+    "segs": [
+     "c411c26a0"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "td2": {
+  "id": "td2",
+  "cat": "In-transit Delay",
+  "party": "Driver",
+  "result": "eta",
+  "commit": "two hours late",
+  "tags": [],
+  "etaChange": true,
+  "outcome": "Driver reached · highway jam after an accident; about two hours late",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} काफ़ी देर से एक जगह खड़ी है, सब ठीक है?",
+    "translation": "Hello, this is UltraTech Cement calling. Truck {VEH} has been standing in one place for a long time. Is everything alright?",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "cbdae4fef"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "आगे एक्सीडेंट हुआ है, दोनों तरफ़ लंबा जाम है।",
+    "translation": "There has been an accident ahead, there is a long jam on both sides.",
+    "segs": [
+     "cdddc91af"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "कितनी देर लगेगी?",
+    "translation": "How long will it take?",
+    "segs": [
+     "c0b390158"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "जाम खुलने में डेढ़ घंटा लगेगा, साइट पर करीब दो घंटे लेट पहुँचूँगा।",
+    "translation": "It will take an hour and a half to clear, I will reach the site about two hours late.",
+    "segs": [
+     "c69bd0458"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है, मैं {SITE} साइट को बता देती हूँ।",
+    "translation": "Okay, I will inform the {SITE} site.",
+    "segs": [
+     "cbca48fd4",
+     "$SITE",
+     "c25b489a3"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "td3": {
+  "id": "td3",
+  "cat": "In-transit Delay",
+  "party": "Driver",
+  "result": "eta",
+  "commit": "at site by 10 AM tomorrow",
+  "tags": [],
+  "etaChange": true,
+  "outcome": "Driver reached · resting overnight, restarts 5 AM; revised arrival 10 AM tomorrow",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH} पिछले तीन घंटे से ढाबे पर खड़ी है।",
+    "translation": "Hello, this is UltraTech Cement calling. Your truck {VEH} has been standing at a dhaba for the last three hours.",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "c5d1b8320"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "मैडम, कल से लगातार चला रहा हूँ, थोड़ा आराम कर रहा हूँ। सुबह पाँच बजे निकलूँगा।",
+    "translation": "Madam, I have been driving non-stop since yesterday, I am resting a little. I will leave at five in the morning.",
+    "segs": [
+     "cd4a953dd"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है, आराम ज़रूरी है। {SITE} कब तक पहुँचेंगे?",
+    "translation": "Okay, rest is necessary. By when will you reach {SITE}?",
+    "segs": [
+     "c10332078",
+     "$SITE",
+     "c51e697a3"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "कल सुबह दस बजे तक।",
+    "translation": "By ten tomorrow morning.",
+    "segs": [
+     "cc1e10ba8"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "td4": {
+  "id": "td4",
+  "cat": "In-transit Delay",
+  "party": "Transporter",
+  "result": "eta",
+  "commit": "replacement truck in 4 hours",
+  "tags": [
+   "Breakdown"
+  ],
+  "etaChange": true,
+  "outcome": "Transporter reached · clutch failure; replacement truck in four hours for transshipment",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH} पाँच घंटे से रास्ते में खड़ी है, ड्राइवर ने ब्रेकडाउन बताया है।",
+    "translation": "Hello, this is UltraTech Cement calling. Your truck {VEH} has been standing on the road for five hours, the driver reported a breakdown.",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "c184a0e93"
+    ]
+   },
+   {
+    "speaker": "Transporter",
+    "text": "हाँ जी, क्लच प्लेट गई है। मिस्त्री भेजा है पर पार्ट कल मिलेगा।",
+    "translation": "Yes, the clutch plate has gone. We sent a mechanic but the part will come tomorrow.",
+    "segs": [
+     "c365a0255"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "माल {SITE} साइट पर आज ही चाहिए। दूसरी गाड़ी भेज सकते हैं?",
+    "translation": "The material is needed at the {SITE} site today. Can you send another truck?",
+    "segs": [
+     "c9f21819f",
+     "$SITE",
+     "cad76d7cf"
+    ]
+   },
+   {
+    "speaker": "Transporter",
+    "text": "चार घंटे में दूसरी गाड़ी भेजकर माल ट्रांसफ़र करवा देता हूँ।",
+    "translation": "I will send another truck in four hours and get the load transferred.",
+    "segs": [
+     "c315c6c7a"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "td5": {
+  "id": "td5",
+  "cat": "In-transit Delay",
+  "party": "Driver",
+  "result": "noanswer",
+  "commit": null,
+  "tags": [
+   "Driver Not Answered"
+  ],
+  "outcome": "No answer · three attempts, phone switched off",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH} तय समय से पीछे है, कृपया संपर्क करें।",
+    "translation": "Hello, this is UltraTech Cement calling. Your truck {VEH} is behind schedule, please get in touch.",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "c84376d34"
+    ]
+   },
+   {
+    "speaker": "Network",
+    "text": "आप जिस नंबर पर कॉल कर रहे हैं वह अभी बंद है।",
+    "translation": "The number you are calling is switched off.",
+    "segs": [
+     "ce7adfebd"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "cd1": {
+  "id": "cd1",
+  "cat": "Customer Detention",
+  "party": "Site in-charge",
+  "result": "commit",
+  "commit": "unloading by 4 PM",
+  "tags": [],
+  "outcome": "Site reached · bays full; committed unloading by 4 PM",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। हमारी गाड़ी {VEH} आपकी {SITE} साइट पर काफ़ी देर से खड़ी है। अनलोडिंग कब होगी?",
+    "translation": "Hello, this is UltraTech Cement calling. Our truck {VEH} has been standing at your {SITE} site for a long time. When will it be unloaded?",
+    "segs": [
+     "c3ac63354",
+     "$VEH",
+     "ce5ac9ca0",
+     "$SITE",
+     "c50f9c203"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "जी, अभी दोनों बे भरे हुए हैं, आगे दो गाड़ियाँ और हैं।",
+    "translation": "The two bays are full right now, there are two more trucks ahead.",
+    "segs": [
+     "cbea7e50c"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "चौबीस घंटे के बाद डिटेंशन चार्ज लगेगा। कोई पक्का समय बता सकते हैं?",
+    "translation": "Detention charges apply after twenty-four hours. Can you give a firm time?",
+    "segs": [
+     "c4a4cf9fe"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "शाम चार बजे तक अनलोड कर देंगे।",
+    "translation": "We will unload it by four in the evening.",
+    "segs": [
+     "c52c71d8b"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "cd2": {
+  "id": "cd2",
+  "cat": "Customer Detention",
+  "party": "Site in-charge",
+  "result": "refusal",
+  "commit": null,
+  "tags": [
+   "Customer Not Responding to Driver"
+  ],
+  "outcome": "Site reached · unloading held for a payment issue with accounts; no time given",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। हमारी गाड़ी {VEH} कल से आपकी {SITE} साइट पर है, अनलोडिंग क्यों नहीं हो रही?",
+    "translation": "Hello, this is UltraTech Cement calling. Our truck {VEH} has been at your {SITE} site since yesterday. Why is it not being unloaded?",
+    "segs": [
+     "c3ac63354",
+     "$VEH",
+     "ce1484c2b",
+     "$SITE",
+     "c58116642"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "अकाउंट्स की तरफ़ से होल्ड है, पिछला पेमेंट क्लियर नहीं हुआ।",
+    "translation": "There is a hold from accounts, the previous payment has not cleared.",
+    "segs": [
+     "c307c91d2"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "कब तक क्लियर होगा? गाड़ी पर डिटेंशन लग रहा है।",
+    "translation": "When will it clear? Detention is running on the truck.",
+    "segs": [
+     "c2a4ac5c1"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "मैं नहीं बता सकता, आप अपने सेल्स वाले से बात कर लीजिए।",
+    "translation": "I cannot say, please talk to your sales person.",
+    "segs": [
+     "cb4a908d1"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "cd3": {
+  "id": "cd3",
+  "cat": "Customer Detention",
+  "party": "Driver",
+  "result": "reason",
+  "commit": null,
+  "tags": [],
+  "outcome": "Driver reached · waiting about 20 hours at the gate, nobody has attended",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} {SITE} साइट पर कब से खड़ी है?",
+    "translation": "Hello, this is UltraTech Cement calling. Since when has truck {VEH} been standing at the {SITE} site?",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "$SITE",
+     "caa16bdeb"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "मैडम, कल रात से गेट पर खड़ा हूँ, करीब बीस घंटे हो गए। कोई सुन नहीं रहा।",
+    "translation": "Madam, I have been at the gate since last night, about twenty hours now. Nobody is listening.",
+    "segs": [
+     "c940b8036"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है, मैं अभी साइट इंचार्ज से बात करती हूँ।",
+    "translation": "Okay, I will talk to the site in-charge right now.",
+    "segs": [
+     "c78f27e45"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "cd4": {
+  "id": "cd4",
+  "cat": "Customer Detention",
+  "party": "Site in-charge",
+  "result": "commit",
+  "commit": "unloading by 10 AM tomorrow",
+  "tags": [],
+  "outcome": "Site reached · labour short today; committed unloading by 10 AM tomorrow",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। {SITE} साइट पर हमारी गाड़ी {VEH} की अनलोडिंग में देरी क्यों है?",
+    "translation": "Hello, this is UltraTech Cement calling. Why is the unloading of our truck {VEH} delayed at the {SITE} site?",
+    "segs": [
+     "ccb8b2b41",
+     "$SITE",
+     "c93233ee5",
+     "$VEH",
+     "c560242a3"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "आज लेबर कम आई है, एक ही गैंग काम कर रही है।",
+    "translation": "Less labour came today, only one gang is working.",
+    "segs": [
+     "c6e55fad1"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "कब तक अनलोड हो जाएगी?",
+    "translation": "By when will it be unloaded?",
+    "segs": [
+     "c0014c141"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "कल सुबह दस बजे तक पक्का कर देंगे।",
+    "translation": "We will definitely do it by ten tomorrow morning.",
+    "segs": [
+     "ccb1cdac7"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "cd5": {
+  "id": "cd5",
+  "cat": "Customer Detention",
+  "party": "Site in-charge",
+  "result": "commit",
+  "commit": "vehicle released within 1 hour",
+  "tags": [],
+  "outcome": "Site reached · unloaded, gate pass pending; release within one hour",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। हमारी गाड़ी {VEH} अब भी आपकी {SITE} साइट के अंदर दिख रही है।",
+    "translation": "Hello, this is UltraTech Cement calling. Our truck {VEH} still shows inside your {SITE} site.",
+    "segs": [
+     "c3ac63354",
+     "$VEH",
+     "c279667af",
+     "$SITE",
+     "ca69a50c2"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "अनलोडिंग हो गई है, बस गेट पास बनना बाकी है।",
+    "translation": "Unloading is done, only the gate pass is pending.",
+    "segs": [
+     "cf138d628"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "गाड़ी कब तक छोड़ देंगे?",
+    "translation": "By when will you release the truck?",
+    "segs": [
+     "ccdda600d"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "एक घंटे में गाड़ी निकल जाएगी।",
+    "translation": "The truck will leave within an hour.",
+    "segs": [
+     "ca4ffdfe7"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "cd6": {
+  "id": "cd6",
+  "cat": "Customer Detention",
+  "party": "Site in-charge",
+  "result": "noanswer",
+  "commit": null,
+  "tags": [
+   "Customer Not Responding to Driver"
+  ],
+  "outcome": "No answer from site · two attempts; driver says gate staff will not give a time",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। हमारी गाड़ी {VEH} आपकी {SITE} साइट पर खड़ी है, कृपया अनलोडिंग का समय बताइए।",
+    "translation": "Hello, this is UltraTech Cement calling. Our truck {VEH} is standing at your {SITE} site, please tell us the unloading time.",
+    "segs": [
+     "c3ac63354",
+     "$VEH",
+     "ce5ac9ca0",
+     "$SITE",
+     "cf55286fc"
+    ]
+   },
+   {
+    "speaker": "Network",
+    "text": "आपके द्वारा डायल किया गया नंबर अभी उत्तर नहीं दे रहा है।",
+    "translation": "The number you have dialled is not answering right now.",
+    "segs": [
+     "c3d8d2ffa"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "cd7": {
+  "id": "cd7",
+  "cat": "Customer Detention",
+  "party": "Site in-charge",
+  "result": "refusal",
+  "commit": null,
+  "tags": [
+   "Invoice Quantity Mismatch"
+  ],
+  "outcome": "Site reached · invoice shows 30 tonnes, order was 25; will not unload without a corrected invoice",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} की अनलोडिंग {SITE} साइट पर रुकी हुई है, क्या दिक्कत है?",
+    "translation": "Hello, this is UltraTech Cement calling. The unloading of truck {VEH} is stuck at the {SITE} site. What is the problem?",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "c0c4c21fd",
+     "$SITE",
+     "c68ff284c"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "इनवॉइस में तीस टन लिखा है, हमारा ऑर्डर पच्चीस टन का था। सही इनवॉइस के बिना हम माल नहीं उतारेंगे।",
+    "translation": "The invoice says thirty tonnes, our order was for twenty-five. We will not unload without a corrected invoice.",
+    "segs": [
+     "c5828980b"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है, मैं प्लांट और सेल्स टीम से बात करके सही इनवॉइस भिजवाती हूँ।",
+    "translation": "Okay, I will speak to the plant and the sales team and get a corrected invoice sent.",
+    "segs": [
+     "c56d191e7"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "cd8": {
+  "id": "cd8",
+  "cat": "Customer Detention",
+  "party": "Site in-charge",
+  "result": "refusal",
+  "commit": null,
+  "tags": [
+   "Customer Not Responding to Driver"
+  ],
+  "outcome": "Site reached · site closed for a local holiday; no unloading until the day after tomorrow",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। हमारी गाड़ी {VEH} कल से {SITE} साइट के बाहर खड़ी है।",
+    "translation": "Hello, this is UltraTech Cement calling. Our truck {VEH} has been standing outside the {SITE} site since yesterday.",
+    "segs": [
+     "c3ac63354",
+     "$VEH",
+     "c35b0554f",
+     "$SITE",
+     "ccfbcaa86"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "आज और कल यहाँ स्थानीय छुट्टी है, साइट बंद है। परसों ही अनलोडिंग होगी।",
+    "translation": "There is a local holiday today and tomorrow, the site is closed. Unloading will happen only the day after tomorrow.",
+    "segs": [
+     "cd7b6f455"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "इतने दिन गाड़ी खड़ी रहेगी तो डिटेंशन लगेगा। मैं सेल्स टीम से बात करती हूँ।",
+    "translation": "If the truck stands that long, detention will apply. I will speak to the sales team.",
+    "segs": [
+     "cec144522"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ud1": {
+  "id": "ud1",
+  "cat": "Unloading Detection",
+  "party": "Driver",
+  "result": "commit",
+  "commit": "unloading done in 1 hour",
+  "tags": [],
+  "outcome": "Driver reached · unloading started at bay 2, done in one hour",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। क्या {SITE} साइट पर आपकी गाड़ी {VEH} की अनलोडिंग शुरू हो गई है?",
+    "translation": "Hello, this is UltraTech Cement calling. Has the unloading of your truck {VEH} started at the {SITE} site?",
+    "segs": [
+     "cf69ab7be",
+     "$SITE",
+     "ca705420d",
+     "$VEH",
+     "cd1af77f2"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "हाँ मैडम, बे नंबर दो पर अनलोडिंग चल रही है।",
+    "translation": "Yes madam, unloading is going on at bay number two.",
+    "segs": [
+     "c6c4bb0cf"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "कितना समय लगेगा?",
+    "translation": "How much time will it take?",
+    "segs": [
+     "c4bc5c6d7"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "एक घंटे में खाली हो जाएगी।",
+    "translation": "It will be empty in an hour.",
+    "segs": [
+     "c7c45ef30"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ud2": {
+  "id": "ud2",
+  "cat": "Unloading Detection",
+  "party": "Driver",
+  "result": "reason",
+  "commit": null,
+  "tags": [
+   "< 80% Confidence"
+  ],
+  "outcome": "Driver reached · standing outside the gate waiting for entry, not unloading",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। सिस्टम में गाड़ी {VEH} {SITE} साइट के पास रुकी दिख रही है, क्या अनलोडिंग हो रही है?",
+    "translation": "Hello, this is UltraTech Cement calling. The system shows truck {VEH} stopped near the {SITE} site. Is unloading happening?",
+    "segs": [
+     "c1ce9a123",
+     "$VEH",
+     "$SITE",
+     "cb18ed852"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "नहीं मैडम, अभी बाहर ही खड़ा हूँ, गेट एंट्री नहीं मिली।",
+    "translation": "No madam, I am still standing outside, I have not got gate entry.",
+    "segs": [
+     "ceb98886c"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है, मैं साइट से बात करती हूँ।",
+    "translation": "Okay, I will talk to the site.",
+    "segs": [
+     "c442d43cc"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ud3": {
+  "id": "ud3",
+  "cat": "Unloading Detection",
+  "party": "Site in-charge",
+  "result": "commit",
+  "commit": "weighment by 7 PM",
+  "tags": [],
+  "outcome": "Site reached · unloaded, waiting in weighbridge queue; weighment by 7 PM",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। हमारी गाड़ी {VEH} की अनलोडिंग हो गई क्या?",
+    "translation": "Hello, this is UltraTech Cement calling. Has our truck {VEH} been unloaded?",
+    "segs": [
+     "c3ac63354",
+     "$VEH",
+     "c49b8ac4f"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "हाँ, अनलोड हो गई है। अब वे-ब्रिज की लाइन में है।",
+    "translation": "Yes, it has been unloaded. Now it is in the weighbridge line.",
+    "segs": [
+     "cf259c9d9"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "तौल कब तक हो जाएगा?",
+    "translation": "By when will the weighment be done?",
+    "segs": [
+     "ce0f3fa3b"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "शाम सात बजे तक हो जाएगा।",
+    "translation": "It will be done by seven in the evening.",
+    "segs": [
+     "c9ff1617b"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ud4": {
+  "id": "ud4",
+  "cat": "Unloading Detection",
+  "party": "Driver",
+  "result": "noanswer",
+  "commit": null,
+  "tags": [
+   "Driver Not Answered"
+  ],
+  "outcome": "No answer · two attempts",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। कृपया गाड़ी {VEH} की अनलोडिंग की स्थिति बताइए।",
+    "translation": "Hello, this is UltraTech Cement calling. Please tell us the unloading status of truck {VEH}.",
+    "segs": [
+     "c1aaddd7c",
+     "$VEH",
+     "c628b31c6"
+    ]
+   },
+   {
+    "speaker": "Network",
+    "text": "कोई उत्तर नहीं मिला।",
+    "translation": "No answer.",
+    "segs": [
+     "c268c3137"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ud5": {
+  "id": "ud5",
+  "cat": "Unloading Detection",
+  "party": "Driver",
+  "result": "commit",
+  "commit": "leaving site now",
+  "tags": [],
+  "outcome": "Driver reached · unloading complete, POD signed, leaving now",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH} {SITE} के अनलोडिंग बे पर दिख रही है, स्थिति क्या है?",
+    "translation": "Hello, this is UltraTech Cement calling. Your truck {VEH} shows at the {SITE} unloading bay. What is the status?",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "$SITE",
+     "c11217dcd"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "अनलोडिंग पूरी हो गई, पीओडी पर साइन भी हो गया। अभी निकल रहा हूँ।",
+    "translation": "Unloading is complete, the POD is signed too. I am leaving now.",
+    "segs": [
+     "c3d536368"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "बहुत बढ़िया, धन्यवाद।",
+    "translation": "Very good, thank you.",
+    "segs": [
+     "c9f40e661"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ep1": {
+  "id": "ep1",
+  "cat": "ePOD Delay",
+  "party": "Driver",
+  "result": "commit",
+  "commit": "POD upload in 1 hour",
+  "tags": [],
+  "outcome": "Driver reached · signed copy with him; upload on the app within one hour",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} की {SITE} डिलीवरी को काफ़ी समय हो गया है, पीओडी अभी तक अपलोड नहीं हुआ।",
+    "translation": "Hello, this is UltraTech Cement calling. It has been a long time since truck {VEH} delivered at {SITE} and the POD has not been uploaded yet.",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "c2d278283",
+     "$SITE",
+     "c3a1c2135"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "साइन वाली कॉपी मेरे पास है मैडम, नेटवर्क नहीं था।",
+    "translation": "The signed copy is with me madam, there was no network.",
+    "segs": [
+     "cadc518db"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "कृपया ड्राइवर ऐप से फ़ोटो अपलोड कर दीजिए।",
+    "translation": "Please upload a photo from the driver app.",
+    "segs": [
+     "c2cb235d4"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "एक घंटे में अपलोड कर दूँगा।",
+    "translation": "I will upload it within an hour.",
+    "segs": [
+     "c7db9dc90"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ep2": {
+  "id": "ep2",
+  "cat": "ePOD Delay",
+  "party": "Site in-charge",
+  "result": "commit",
+  "commit": "stamped POD by tomorrow morning",
+  "tags": [],
+  "outcome": "Site reached · receiver stamp missing; stamped POD by tomorrow morning",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} की डिलीवरी की पीओडी पर {SITE} साइट की मोहर नहीं लगी है।",
+    "translation": "Hello, this is UltraTech Cement calling. The {SITE} site stamp is missing on the POD for truck {VEH}.",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "c4ac4d9ff",
+     "$SITE",
+     "c6a53e02a"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "स्टोर इंचार्ज छुट्टी पर थे, मोहर उन्हीं के पास है।",
+    "translation": "The store in-charge was on leave, he has the stamp.",
+    "segs": [
+     "c9a2b2c0e"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "कब तक मोहर लगाकर भेज देंगे?",
+    "translation": "By when will you send it stamped?",
+    "segs": [
+     "ca2704c56"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "कल सुबह तक भेज देंगे।",
+    "translation": "We will send it by tomorrow morning.",
+    "segs": [
+     "c0f6ce979"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ep3": {
+  "id": "ep3",
+  "cat": "ePOD Delay",
+  "party": "Transporter",
+  "result": "commit",
+  "commit": "scan by email this evening",
+  "tags": [
+   "POD Not Collected"
+  ],
+  "outcome": "Transporter reached · POD at branch office; scan by email this evening",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपकी गाड़ी {VEH} की पीओडी दो दिन से पेंडिंग है।",
+    "translation": "Hello, this is UltraTech Cement calling. The POD for your truck {VEH} has been pending for two days.",
+    "segs": [
+     "c4be341bf",
+     "$VEH",
+     "c4ea7c8d3"
+    ]
+   },
+   {
+    "speaker": "Transporter",
+    "text": "जी, ओरिजिनल कॉपी ब्रांच ऑफ़िस में आ गई है।",
+    "translation": "The original copy has reached our branch office.",
+    "segs": [
+     "c0b45ac14"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "कृपया उसका स्कैन आज ही ईमेल कर दीजिए।",
+    "translation": "Please email its scan today itself.",
+    "segs": [
+     "ca1e9218d"
+    ]
+   },
+   {
+    "speaker": "Transporter",
+    "text": "आज शाम तक स्कैन भेज देता हूँ।",
+    "translation": "I will send the scan by this evening.",
+    "segs": [
+     "c051c26fe"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ep4": {
+  "id": "ep4",
+  "cat": "ePOD Delay",
+  "party": "Driver",
+  "result": "commit",
+  "commit": "retake photo today",
+  "tags": [
+   "Document Illegible"
+  ],
+  "outcome": "Driver reached · uploaded photo is blurred; will retake in daylight today",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} की जो पीओडी फ़ोटो आपने भेजी है वह पढ़ी नहीं जा रही।",
+    "translation": "Hello, this is UltraTech Cement calling. The POD photo you sent for truck {VEH} cannot be read.",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "c7ee60075"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "रात में खींची थी मैडम, अंधेरा था।",
+    "translation": "I took it at night madam, it was dark.",
+    "segs": [
+     "c080fc44a"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "कृपया दिन की रोशनी में दोबारा फ़ोटो भेजिए।",
+    "translation": "Please send the photo again in daylight.",
+    "segs": [
+     "c1213a231"
+    ]
+   },
+   {
+    "speaker": "Driver",
+    "text": "ठीक है, आज ही दोबारा भेज दूँगा।",
+    "translation": "Okay, I will send it again today itself.",
+    "segs": [
+     "cf769be24"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "ep5": {
+  "id": "ep5",
+  "cat": "ePOD Delay",
+  "party": "Site in-charge",
+  "result": "refusal",
+  "commit": null,
+  "tags": [
+   "POD Not Collected"
+  ],
+  "outcome": "Site reached · disputes half a tonne short; will not sign without the weighbridge slip",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। गाड़ी {VEH} की डिलीवरी की पीओडी पर अभी तक साइन नहीं हुआ।",
+    "translation": "Hello, this is UltraTech Cement calling. The POD for truck {VEH} has still not been signed.",
+    "segs": [
+     "c0be1577f",
+     "$VEH",
+     "ca19f8d16"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "माल आधा टन कम आया है। वे-ब्रिज स्लिप के बिना हम साइन नहीं करेंगे।",
+    "translation": "The material came half a tonne short. We will not sign without the weighbridge slip.",
+    "segs": [
+     "c10419ba7"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "ठीक है, मैं {PLANT} से वे-ब्रिज स्लिप मँगवाती हूँ।",
+    "translation": "Okay, I will get the weighbridge slip from {PLANT}.",
+    "segs": [
+     "cbca48fd4",
+     "$PLANT",
+     "cbbc05944"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "eta1": {
+  "id": "eta1",
+  "cat": "ETA update",
+  "party": "Site in-charge",
+  "result": "ack",
+  "commit": null,
+  "tags": [],
+  "outcome": "Site informed of revised arrival; bay will be kept ready",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। {SITE} साइट के लिए आ रही हमारी गाड़ी {VEH} का पहुँचने का समय बदल गया है।",
+    "translation": "Hello, this is UltraTech Cement calling. The arrival time of our truck {VEH} coming to the {SITE} site has changed.",
+    "segs": [
+     "ccb8b2b41",
+     "$SITE",
+     "cc32cd8b7",
+     "$VEH",
+     "c6a6ae5ef"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "अच्छा, अब कब तक आएगी?",
+    "translation": "I see, when will it come now?",
+    "segs": [
+     "c2b0402ec"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "गाड़ी अब {ETA} पहुँचेगी। यह समय हमने ईमेल पर भी भेज दिया है।",
+    "translation": "The truck will now arrive {ETA}. We have also sent this time by email.",
+    "segs": [
+     "c9bfd7de1",
+     "$ETA",
+     "c8c21b184"
+    ]
+   },
+   {
+    "speaker": "Site in-charge",
+    "text": "ठीक है, बे खाली रखेंगे।",
+    "translation": "Okay, we will keep a bay free.",
+    "segs": [
+     "c23b699f1"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ },
+ "eta2": {
+  "id": "eta2",
+  "cat": "ETA update",
+  "party": "Sales officer",
+  "result": "ack",
+  "commit": null,
+  "tags": [],
+  "outcome": "Sales officer informed of revised arrival; will update the customer",
+  "lines": [
+   {
+    "speaker": "AI agent",
+    "text": "नमस्ते, मैं अल्ट्राटेक सीमेंट से बोल रही हूँ। आपके ग्राहक {SITE} के लिए गाड़ी {VEH} देर से पहुँचेगी। अब यह {ETA} पहुँचेगी, नया समय ईमेल पर भेजा है।",
+    "translation": "Hello, this is UltraTech Cement calling. Truck {VEH} for your customer {SITE} will arrive late. It will now arrive {ETA}; we have emailed the new time.",
+    "segs": [
+     "ca7212071",
+     "$SITE",
+     "cd3240386",
+     "$VEH",
+     "c84304b63",
+     "$ETA",
+     "c7fd566e6"
+    ]
+   },
+   {
+    "speaker": "Sales officer",
+    "text": "ठीक है, मैं ग्राहक को बता देती हूँ।",
+    "translation": "Okay, I will tell the customer.",
+    "segs": [
+     "c4ea15d8d"
+    ]
+   },
+   {
+    "speaker": "AI agent",
+    "text": "धन्यवाद। आगे कोई बदलाव होगा तो हम फिर बताएंगे।",
+    "translation": "Thank you. If anything changes again we will let you know.",
+    "segs": [
+     "cd015537f"
+    ]
+   }
+  ],
+  "language": "Hindi"
+ }
+}

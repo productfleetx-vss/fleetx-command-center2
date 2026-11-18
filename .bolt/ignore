@@ -1,0 +1,19 @@
+# Keep Bolt's context small: build output, deps, lockfile, binaries, large data, docs.
+dist
+dist-single
+node_modules
+package-lock.json
+src/assets
+public
+src/data/clips.json
+src/data/trips.json
+src/data/india-map.json
+src/data/calls.json
+src/legacy
+supabase/migrations
+docs
+*.png
+*.svg
+*.ico
+*.woff2
+*.mp3
