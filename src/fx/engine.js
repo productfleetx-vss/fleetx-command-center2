@@ -485,6 +485,10 @@ var SUBS = { rd1: 'Road work diversion', rd2: 'Fuel stop detour', rd3: 'No-entry
    It is shown on whichever ticket carries that recording, so the two always travel together.
    Only the reason changes: the agent call, timings and everything else stay as derived. */
 var RECORDED_REASON = { 'Customer Detention': 'Driver having lunch for prolonged period' };
+/* Vehicle shown on the ticket that carries the recording of that type. If another ticket shows
+   that vehicle, the two swap numbers, so no registration repeats in the lists and none is
+   invented. Ticket display only: trips, the trip feed and the Convin payload are unchanged. */
+var RECORDED_VEHICLE = { 'Customer Detention': 'KA28AB3800' };
 function libPool(cat) { return Object.keys(LIB).filter(function (k) { return LIB[k].cat === cat; }); }
 function pickLib(cat, sub, lane, seed) {
   if (cat !== 'Route Deviation' || sub !== 'Driver Not Answered') { if (SUB_LIB[sub] && LIB[SUB_LIB[sub]] && LIB[SUB_LIB[sub]].cat === cat) return SUB_LIB[sub]; }
@@ -726,7 +730,16 @@ function derive() {
     var b = recTop[t.cat];
     if (!b || (t.score - b.score || t.slaH - b.slaH || (t.repeat ? 1 : 0) - (b.repeat ? 1 : 0)) > 0) recTop[t.cat] = t;
   });
-  Object.keys(recTop).forEach(function (cat) { var t = recTop[cat]; t.recording = true; if (RECORDED_REASON[cat]) t.sub = RECORDED_REASON[cat]; });
+  Object.keys(recTop).forEach(function (cat) {
+    var t = recTop[cat], want = RECORDED_VEHICLE[cat];
+    t.recording = true;
+    if (RECORDED_REASON[cat]) t.sub = RECORDED_REASON[cat];
+    if (want && t.vehicle !== want) {
+      var was = t.vehicle;
+      tickets.forEach(function (x) { if (x !== t && x.vehicle === want) x.vehicle = was; });
+      t.vehicle = want;
+    }
+  });
 
   DER = { rev: STATE.rev, nowMs: nowMs, calcs: calcs, calcByDi: calcByDi, tickets: vis, all: tickets, open: open, avgSite: avgSite };
   return DER;
@@ -1153,7 +1166,7 @@ function materialize(S, t) {
       ? 'Vehicle has been at ' + tr.dest + ' for ' + c.siteH.toFixed(1) + ' hours since the planned arrival at ' + fmtDT(c.arrival) + '. Free time is ' + CONFIG.cost.freeHours + ' hours.'
       : 'Vehicle is ' + c.lateH.toFixed(1) + ' hours behind the planned arrival of ' + fmtDT(c.arrival) + ' for a lead of ' + tr.km + ' km.',
     assigneePhone: '', driverPhone: tr.mobile ? '+91 ' + tr.mobile : '', transporterPhone: '', customer: tr.dest, customerPhone: '',
-    jobName: tr.di, origin: tr.plant, destination: tr.dest, vehicleNumber: tr.vehicle, vehicleId: '', transporter: tr.transporter, transporterId: '', driver: tr.driver,
+    jobName: tr.di, origin: tr.plant, destination: tr.dest, vehicleNumber: t.vehicle, vehicleId: '', transporter: tr.transporter, transporterId: '', driver: tr.driver,
     severity: t.prio === 'red' ? 'Critical' : t.prio === 'amber' ? 'High' : 'Medium', site: tr.dest, tripIds: [tr.di], owner: CONFIG.users[2].name,
     playbook: t.cat === 'Customer Detention' ? 'CASE-DETENTION' : 'CASE-ROUTE', detectedAt: fmtTime(detected), due: '', nextAction: t.lane === 'action' ? 'Needs a person' : 'Agent working',
     evidence: [t.mText]
@@ -1295,15 +1308,27 @@ FX.setCT = function (next) {
   if (toast && window.__FXBridge) setTimeout(function () { window.__FXBridge.toast(toast); }, 0);
 };
 
+/* A case record keeps the vehicle and reason the ticket had when it was first opened. The ticket
+   carrying a recording can change as the queue re-ranks (RECORDED_VEHICLE / RECORDED_REASON), so
+   bring those three display fields up to date before the drawer opens. History is left alone. */
+function refreshCaseDisplay(t) {
+  var c = STATE.ct.cases.find(function (x) { return x.id === t.id; });
+  if (!c || t.src !== 'derived' || (c.job && c.job.vehicleNumber === t.vehicle && c.subReason === t.sub)) return;
+  commit(function (S) {
+    S.ct = Object.assign({}, S.ct, { rev: (S.ct.rev || 0) + 1, cases: S.ct.cases.map(function (x) {
+      return x.id !== t.id ? x : Object.assign({}, x, { subReason: t.sub, title: t.cat + ' / ' + t.sub, job: Object.assign({}, x.job, { vehicleNumber: t.vehicle }) });
+    }) });
+  });
+}
 /* Open a ticket in the application drawer (materialising it first when needed). */
 FX.openTicket = function (id, tab) {
   var t = FX.ticket(id); if (!t) return;
-  if (!STATE.ct.cases.some(function (c) { return c.id === id; })) commit(function (S) { materialize(S, t); });
+  if (!STATE.ct.cases.some(function (c) { return c.id === id; })) commit(function (S) { materialize(S, t); }); else refreshCaseDisplay(t);
   if (window.__FXBridge) window.__FXBridge.open(id, tab);
 };
 FX.ticketAction = function (id, kind) {
   var t = FX.ticket(id); if (!t) return;
-  if (!STATE.ct.cases.some(function (c) { return c.id === id; })) commit(function (S) { materialize(S, t); });
+  if (!STATE.ct.cases.some(function (c) { return c.id === id; })) commit(function (S) { materialize(S, t); }); else refreshCaseDisplay(t);
   if (window.__FXBridge) setTimeout(function () { window.__FXBridge.action(kind, id); }, 0);
 };
 
