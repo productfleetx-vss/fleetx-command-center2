@@ -1620,14 +1620,9 @@ function caseParts(t, u) {
   return { head: head, body: body };
 }
 /* Calls on a ticket, from the store (agent calls) or the ticket's own record. */
-/* Real call recordings (src/fx/recordings.ts) sit on the top-ranked case of their type, ranked
-   exactly as in "Cases that need a person". Audio only: no transcript is attached yet. */
-function recordingFor(t) {
-  var r = RECORDINGS[t.cat]; if (!r) return null;
-  var need = FX.metrics().openTickets.filter(function (x) { return x.phase === 'open' && x.lane !== 'ai' && x.cat === t.cat; });
-  var top = rankTickets(need)[0];
-  return top && top.id === t.id ? r : null;
-}
+/* Real call recordings (src/fx/recordings.ts) sit on the top-ranked case of their type; the engine
+   marks that ticket (t.recording) with the same ranking the queue uses, and gives it the recorded reason. */
+function recordingFor(t) { return t.recording ? RECORDINGS[t.cat] || null : null; }
 function caseCalls(t) {
   var S = FX.state(), out = [];
   (S.calls[t.id] || []).forEach(function (cl) { out.push({ tx: FX.txFor(t, cl.lib, cl.eta), when: U.fmtDT(FX.timeOf(cl.at)) }); });

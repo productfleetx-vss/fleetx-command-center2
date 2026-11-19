@@ -481,10 +481,10 @@ var SUBS = { rd1: 'Road work diversion', rd2: 'Fuel stop detour', rd3: 'No-entry
   cd1: 'Bays full at site', cd2: 'Payment hold at site', cd3: 'Gate not attended', cd4: 'Labour shortage at site', cd5: 'Gate pass pending', cd6: 'Site not answering', cd7: 'Invoice quantity mismatch', cd8: 'Site closed for holiday',
   ud1: 'Unloading in progress', ud2: 'Waiting for gate entry', ud3: 'Weighbridge queue', ud4: 'Driver not reachable', ud5: 'Unloaded, leaving',
   ep1: 'Signed copy with driver', ep2: 'Receiver stamp missing', ep3: 'POD at transporter branch', ep4: 'Blurred POD photo', ep5: 'Quantity dispute' };
-/* Reason shown on a specific ticket, by ticket id. Only the reason changes: the agent call,
-   timings and everything else on the ticket stay as derived. DI 6905235017 (KA28AB3800) carries
-   the real Customer Detention recording, where the driver says he was having lunch. */
-var REASON_OVERRIDES = { 'EX-CD-6905235017': 'Driver having lunch for prolonged period' };
+/* Reason the driver gives in the real call recording of each type (src/fx/recordings.ts).
+   It is shown on whichever ticket carries that recording, so the two always travel together.
+   Only the reason changes: the agent call, timings and everything else stay as derived. */
+var RECORDED_REASON = { 'Customer Detention': 'Driver having lunch for prolonged period' };
 function libPool(cat) { return Object.keys(LIB).filter(function (k) { return LIB[k].cat === cat; }); }
 function pickLib(cat, sub, lane, seed) {
   if (cat !== 'Route Deviation' || sub !== 'Driver Not Answered') { if (SUB_LIB[sub] && LIB[SUB_LIB[sub]] && LIB[SUB_LIB[sub]].cat === cat) return SUB_LIB[sub]; }
@@ -692,8 +692,6 @@ function derive() {
       if (tk.escTag.length && tk.picked) tk.lane = 'action';
     }
   });
-  // Reasons set by hand for specific tickets, where a real call recording says otherwise.
-  tickets.forEach(function (tk) { if (REASON_OVERRIDES[tk.id]) tk.sub = REASON_OVERRIDES[tk.id]; });
   // Overrides (verification / closure / notes) and visibility.
   tickets.forEach(function (tk) {
     var o = STATE.tk[tk.id];
@@ -718,6 +716,17 @@ function derive() {
     t.score = (W.rupees * ((t.val || 0) / maxRs) + W.sla * (t.slaH / maxSla) + W.repeat * (t.repeat ? 1 : 0)) / wsum;
     t.prio = t.phase !== 'open' ? 'neutral' : t.score >= CONFIG.priority.redAt ? 'red' : t.score >= CONFIG.priority.amberAt ? 'amber' : 'green';
   });
+
+  // The real call recording of each type sits on the top-ranked case of that type in "Cases that
+  // need a person", ranked as the queue ranks it (score, then SLA age, then repeat). Mark that
+  // ticket and give it the recorded reason, so the recording and its reason move together.
+  var recTop = {};
+  open.forEach(function (t) {
+    if (t.phase !== 'open' || t.lane === 'ai') return;
+    var b = recTop[t.cat];
+    if (!b || (t.score - b.score || t.slaH - b.slaH || (t.repeat ? 1 : 0) - (b.repeat ? 1 : 0)) > 0) recTop[t.cat] = t;
+  });
+  Object.keys(recTop).forEach(function (cat) { var t = recTop[cat]; t.recording = true; if (RECORDED_REASON[cat]) t.sub = RECORDED_REASON[cat]; });
 
   DER = { rev: STATE.rev, nowMs: nowMs, calcs: calcs, calcByDi: calcByDi, tickets: vis, all: tickets, open: open, avgSite: avgSite };
   return DER;
